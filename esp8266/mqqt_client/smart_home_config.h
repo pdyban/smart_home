@@ -13,5 +13,11 @@
 #define temperature_topic "sensor/temperature"
 #define pm10_topic "sensor/pm10"
 #define pm25_topic "sensor/pm25"
+#define debug_topic "sensor/debug"
 
-#define refresh_delay 600
+// delay between alive cycles in ms
+#define refresh_delay 5000
+// delay after wifi (dis-)connect functions in ms
+#define wifi_delay 1000
+// delay after publishing MQTT messages in ms
+#define mqtt_publish_delay 50
