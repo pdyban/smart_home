@@ -28,23 +28,16 @@
   #include <Adafruit_BME280.h>
 #endif // USING_BME280
 
-// Wifi includes
-extern "C" {
-  #include "user_interface.h"  // Required for wifi_station_connect() to work
-}
-
 // Configuration
 #include "smart_home_config.h"
 
 // MQTT configuration
 EspMQTTClient client(
-  wifi_ssid,
-  wifi_password,
   mqtt_server,      // MQTT Broker server ip
+  mqtt_server_port, // The MQTT port, default to 1883
   mqtt_user,        // Can be omitted if not needed
   mqtt_password,    // Can be omitted if not needed
-  mqtt_client_name, // Client name that uniquely identifies your device
-  mqtt_server_port  // The MQTT port, default to 1883
+  mqtt_client_name  // Client name that uniquely identifies your device
 );
 
 // SDS011 configuration
@@ -63,45 +56,68 @@ EspMQTTClient client(
 
 // BME280 configuration
 #ifdef USING_BME280
-  Adafruit_BME280 bme; 
+  Adafruit_BME280 bme;
   #define SEALEVELPRESSURE_HPA (1013.25)
 #endif // USING_BME280
 
-// Wifi configuration
-#define FPM_SLEEP_MAX_TIME 0xFFFFFFF
-
-void enableWifi() {
-  wifi_fpm_do_wakeup();
-  wifi_fpm_close();
-
+bool enableWifi() {
   Serial.println("Enabling Wifi chip...");
-  wifi_set_opmode(STATION_MODE);
-  wifi_station_connect();
+  WiFi.forceSleepWake();
+  delay(1);
+
+  // Disable the WiFi persistence.  The ESP8266 will not load and save WiFi settings in the flash memory.
+  WiFi.persistent( false );
+
+  // Bring up the WiFi connection
+  Serial.printf("Connecting to %s\n", wifi_ssid);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(wifi_ssid, wifi_password);
+  WiFi.config(wifi_device_static_ip, wifi_gateway, wifi_subnet_mask);
+  size_t wifi_connection_attempts = 0;
+  while (WiFi.status() != WL_CONNECTED && wifi_connection_attempts++ < 5)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+
+  if(WiFi.status() == WL_CONNECTED) {
+    Serial.print("Connected, IP address: ");
+    Serial.println(WiFi.localIP());
+  }
+  else {
+    Serial.println("Wifi connection failed.");
+    return false;
+  }
   
-  delay(wifi_delay);
+  return true;
 }
 
 void disableWifi() {
   Serial.println("Disabling Wifi chip...");
-  
-  wifi_station_disconnect();
-  wifi_set_opmode(NULL_MODE);
-  wifi_set_sleep_type(MODEM_SLEEP_T);
-  wifi_fpm_open();
-  wifi_fpm_do_sleep(FPM_SLEEP_MAX_TIME);
-  delay(wifi_delay);
+
+  // disconnect client from MQTT broker to avoid reconnection errors
+  client.disconnect();
+
+  WiFi.disconnect(true);
+  WiFi.mode(WIFI_OFF);
+  WiFi.forceSleepBegin();
+  delay(1);
 }
 
 void setup()
 {
   Serial.println("setup()");
   Serial.begin(115200);
-
-  //setupLED();
-  //enableLED();
-
-  setupMQTTClient();
+  //Serial.setDebugOutput(true);  // enables extensive debug output, incl. Wifi and MQTT connection
   
+  if(enableWifi()) {
+    setupMQTTClient();
+    setupSensors();
+  }
+}
+
+void setupSensors() {
 #ifdef USING_SDS011
   setupSDS011();
 #endif // USING_SDS011
@@ -109,18 +125,16 @@ void setup()
 #ifdef USING_DHT22
   setupDHT22();
 #endif // USING_DHT22
-  
+
 #ifdef USING_BME280
   setupBME280();
 #endif // USING_BME280
 }
 
-void setupMQTTClient() {  
-  enableWifi();
-  delay(wifi_delay);
-  
+void setupMQTTClient() {
   Serial.println("setupMQTTClient()");
-  // Optional functionalities of EspMQTTClient 
+
+  // Optional functionalities of EspMQTTClient
   client.enableDebuggingMessages(); // Enable debugging messages sent to serial output
   //client.enableHTTPWebUpdater(); // Enable the web updater. User and password default to values of MQTTUsername and MQTTPassword. These can be overrited with enableHTTPWebUpdater("user", "password").
   client.enableLastWillMessage(debug_topic, "Client disconnected", true);  // You can activate the retain flag by setting the third parameter to true
@@ -154,7 +168,7 @@ void setupSDS011() {
 
   Serial.println(sds.queryFirmwareVersion().toString()); // prints firmware version
   Serial.println(sds.setActiveReportingMode().toString()); // ensures sensor is in 'active' reporting mode
-  Serial.println(sds.setContinuousWorkingPeriod().toString()); // ensures sensor has continuous working period - default but not recommended 
+  Serial.println(sds.setContinuousWorkingPeriod().toString()); // ensures sensor has continuous working period - default but not recommended
 }
 
 void publishSDS011() {
@@ -208,7 +222,7 @@ void publishDHT22() {
   float hic = dht.computeHeatIndex(t, h, false);
 
   client.publish(temperature_topic, String(t).c_str());
-  client.publish(humidity_topic, String(h).c_str());    
+  client.publish(humidity_topic, String(h).c_str());
 
   Serial.print("Humidity: ");
   Serial.print(h);
@@ -238,7 +252,7 @@ void setupBME280() {
 
 void publishBME280() {
   Serial.println("publishBME280()");
-  
+
   float t, h, p, a;
   t = bme.readTemperature();
   h = bme.readHumidity();
@@ -259,8 +273,8 @@ void publishBME280() {
   Serial.println(" m");
 
   client.publish(temperature_topic, String(t).c_str());
-  client.publish(humidity_topic, String(h).c_str());   
-  client.publish(pressure_topic, String(p).c_str());    
+  client.publish(humidity_topic, String(h).c_str());
+  client.publish(pressure_topic, String(p).c_str());
 }
 #endif // USING_BME280
 
@@ -268,15 +282,16 @@ void publishBME280() {
 void onConnectionEstablished()
 {
   client.publish(debug_topic, "Connected!"); // You can activate the retain flag by setting the third parameter to true
-  Serial.println("Connection with Wifi network established.");
+  Serial.println("Connection with Wifi network & MQTT host established.");
 }
 
 void loop()
 {
+  Serial.println("client.loop()");
   client.loop();
   Serial.println("loop()");
 
-  if(!client.isConnected()) { 
+  if(!client.isConnected()) {
     if(!client.isWifiConnected()) {
       Serial.println("Could not establish Wifi connection.");
     }
@@ -292,7 +307,7 @@ void loop()
 #ifdef USING_DHT22
     publishDHT22();
 #endif // USING_DHT22
-  
+
 #ifdef USING_BME280
     publishBME280();
 #endif // USING_BME280
@@ -306,10 +321,9 @@ void loop()
 
   disableWifi();
 
-  //disableLED();
-  
   Serial.print("Going into deep sleep for ");
   Serial.print(refresh_delay/1000);
   Serial.println("s");
   ESP.deepSleep(refresh_delay*1e3, WAKE_RF_DEFAULT);
+  Serial.println("DEEP SLEEPING zzz...");
 }

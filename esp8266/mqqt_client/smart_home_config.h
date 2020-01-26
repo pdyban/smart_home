@@ -1,6 +1,9 @@
 // WIFI settings
-#define wifi_ssid     "my_wifi_ssid"
-#define wifi_password "my_wifi_password"
+#define wifi_ssid             "my_wifi_ssid"
+#define wifi_password         "my_wifi_password"
+#define wifi_device_static_ip IPAddress(192,168,0,my_device_static_ip)
+#define wifi_gateway          IPAddress(192,168,0,my_router_static_ip)
+#define wifi_subnet_mask      IPAddress(255,255,255,0)
 
 // MQQT settings
 #define mqtt_server      "my_mqtt_broker_ip"
@@ -18,7 +21,5 @@
 
 // delay between alive cycles in ms
 #define refresh_delay      30000 // previous value: 10000
-// delay after wifi (dis-)connect functions in ms
-#define wifi_delay         2000  // best value: 3000
 // delay after publishing MQTT messages in ms
 #define mqtt_publish_delay 150
