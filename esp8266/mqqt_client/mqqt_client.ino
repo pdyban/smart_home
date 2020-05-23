@@ -5,7 +5,7 @@
 */
 
 // Select modules that you want to compile:
-//#define USING_SDS011
+#define USING_SDS011
 #define USING_BME280
 //#define USING_DHT22
 
@@ -42,8 +42,8 @@ EspMQTTClient client(
 
 // SDS011 configuration
 #ifdef USING_SDS011
-  int rxPin = D1; // rxPin has to be connected to TXD on SDS011 board
-  int txPin = D2; // txPin has to be connected to RXD on SDS011 board
+  int rxPin = 12; // rxPin has to be connected to TXD on SDS011 board, TXD connected to D6 (GPIO12) -> use 12
+  int txPin = 14; // txPin has to be connected to RXD on SDS011 board, RXD connected to D5 (GPI14) -> use 14
   SdsDustSensor sds(rxPin, txPin);
 #endif // USING_SDS011
 
