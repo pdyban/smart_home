@@ -1,0 +1,68 @@
+sitemap home label="Smart Home"
+{
+  Frame label="Today"
+  {
+    Text item=Date
+    Text item=Time
+  }
+  Frame label="Outside"
+  {
+    Text item=Weather_OWM_Temperature icon="temperature"
+    Text item=Weather_OWM_Humidity icon="humidity"
+    Text item=Weather_OWM_Condition icon="sun_clouds"
+    Text item=Weather_OWM_Wind_Speed icon="wind"
+    Text item=LocalAirQuality_AirQualityIndex icon="qualityofservice"
+  }
+  Frame label="Bathroom"
+  {
+      Text item=ESPBathroom_TemperatureBathroom icon="temperature" label="Room temperature [%d °C]"
+      Text item=ESPBathroom_HumidityBathroom icon="humidity" label="Relative humidity [%d %%]"
+      Switch item=HeatingBathroom_State icon="heating"
+  }
+  Frame label="Bedroom"
+  {
+      Text item=ESPBedroom_TemperatureBedroom icon="temperature" label="Room temperature [%d °C]"
+      Text item=ESPBedroom_HumidityBedroom icon="humidity" label="Relative humidity [%d %%]"
+      Setpoint item=ThermostatBedroom_1_SetPointTemperature icon="heating" label="Target temperature [%d °C]" minValue=8 maxValue=25 step=1
+  }
+  Frame label="Office"
+  {
+      Text item=ESPOffice_TemperatureOffice icon="temperature" label="Room temperature [%d °C]"
+      Text item=ESPOffice_HumidityOffice icon="humidity" label="Relative humidity [%d %%]"
+      Setpoint item=ThermostatOffice_1_SetPointTemperature icon="heating" label="Target temperature [%d °C]" minValue=8 maxValue=25 step=1
+  }
+  Frame label="Living room"
+  {
+      Text item=ESPLivingroom_TemperatureLivingroom icon="temperature" label="Room temperature [%d °C]"
+      Text item=ESPLivingroom_HumidityLivingroom icon="humidity" label="Relative humidity [%d %%]"
+      Text item=ESPLivingroom_PM10Livingroom icon="qualityofservice" label="Air quality (PM10) [%d ppm]"
+      Text item=ESPLivingroom_PM25Livingroom icon="qualityofservice" label="Air quality (PM2.5) [%d ppm]"
+  }
+  Frame label="Hall"
+  {
+      Text item=ESPHall_TemperatureHall icon="temperature" label="Room temperature [%d °C]"
+      Text item=ESPHall_HumidityHall icon="humidity" label="Relative humidity [%d %%]"
+  }
+  Frame label="Storage room"
+  {
+      Text item=ESPStore_TemperatureStore icon="temperature" label="Room temperature [%d °C]"
+      Text item=ESPStore_HumidityStore icon="humidity" label="Relative humidity [%d %%]"
+  }
+  Frame label="Neato"
+  {
+      Selection item=Neato_SendCommand icon="switch" label="Launch Neato"
+  }
+  Frame label="Sound"
+  {
+      Slider item=DenonVolume
+      Switch item=DenonMute
+      Selection item=spotifyPlaylists     label="Playlist" icon="music"
+      Default   item=spotifyTrackPlayer   label="Player"
+      Image     item=spotifyAlbumImage    label="Album Art"
+      Group item=gSoundAdvanced
+      {
+        Selection item=spotifyDevices       label="Active device [%s]"
+        Switch item=DenonPower
+      }
+  }
+}

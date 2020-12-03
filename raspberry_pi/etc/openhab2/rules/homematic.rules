@@ -1,0 +1,10 @@
+import org.eclipse.smarthome.core.types.RefreshType
+
+rule "Trigger update of values"
+when
+  Time cron "0 0/1 * 1/1 * ? *"
+then
+  ThermostatBedroom_1_SetPointTemperature.sendCommand(RefreshType.REFRESH)
+  ThermostatOffice_1_SetPointTemperature.sendCommand(RefreshType.REFRESH)
+  HeatingBathroom_State.sendCommand(RefreshType.REFRESH)
+end

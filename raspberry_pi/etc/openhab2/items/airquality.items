@@ -1,0 +1,2 @@
+Number ESPLivingroom_PM10Livingroom "Living room PM10 particles [%.1f ppm]" (Livingroom, gInside) {channel="mqtt:topic:ESPLivingroom:PM10_Livingroom"}
+Number ESPLivingroom_PM25Livingroom "Living room PM2.5 particles [%.1f ppm]" (Livingroom, gInside) {channel="mqtt:topic:ESPLivingroom:PM25_Livingroom"}

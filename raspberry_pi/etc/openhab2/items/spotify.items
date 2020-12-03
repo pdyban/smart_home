@@ -1,0 +1,20 @@
+Player spotifyTrackPlayer   "Player"               {channel="spotify:player:SpotifyPlayerBridge:trackPlayer"}
+String spotifyDevices       "Active device [%s]"   (gSoundAdvanced) {channel="spotify:player:SpotifyPlayerBridge:devices"}
+Switch spotifyDeviceShuffle "Shuffle mode"         {channel="spotify:player:SpotifyPlayerBridge:deviceShuffle"}
+String spotifyTrackRepeat   "Repeat mode: [%s]"    {channel="spotify:player:SpotifyPlayerBridge:trackRepeat"}
+String spotifyTrackProgress "Track progress: [%s]" {channel="spotify:player:SpotifyPlayerBridge:trackProgress"}
+String spotifyTrackDuration "Track duration: [%s]" {channel="spotify:player:SpotifyPlayerBridge:trackDuration"}
+String spotifyTrackName     "Track Name: [%s]"     {channel="spotify:player:SpotifyPlayerBridge:trackName"}
+String spotifyAlbumName     "Album Name: [%s]"     {channel="spotify:player:SpotifyPlayerBridge:albumName"}
+String spotifyArtistName    "Artist Name: [%s]"    {channel="spotify:player:SpotifyPlayerBridge:artistName"}
+Image  spotifyAlbumImage    "Album Art"            {channel="spotify:player:SpotifyPlayerBridge:albumImage"}
+String spotifyPlaylists     "Playlists [%s]"       {channel="spotify:player:SpotifyPlayerBridge:playlists"}
+String spotifyPlayName      "Playlist [%s]"        {channel="spotify:player:SpotifyPlayerBridge:playlistName"}
+String spotifyAccessToken   "Access Token"         {channel="spotify:player:SpotifyPlayerBridge:accessToken"}
+String sportifyTrackPlay    "Track to Play"        {channel="spotify:player:SpotifyPlayerBridge:trackPlay"}
+
+String RaspotifyDeviceName    {channel="spotify:device:SpotifyPlayerBridge:12ef:deviceName"}
+Player RaspotifyPlayer        {channel="spotify:device:SpotifyPlayerBridge:12ef:devicePlayer"}
+Dimmer RaspotifyDeviceVolume  {channel="spotify:device:SpotifyPlayerBridge:12ef:deviceVolume"}
+Switch RaspotifyDeviceShuffle {channel="spotify:device:SpotifyPlayerBridge:12ef:deviceShuffle"}
+String RaspotifyTrackPlay     {channel="spotify:device:SpotifyPlayerBridge:12ef:trackPlay"}

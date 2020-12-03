@@ -1,0 +1,11 @@
+// Open Weather Map
+Number:Temperature		Weather_OWM_Temperature			"Temperature [%.0f %unit%]" <temperature>		{channel="openweathermap:weather-and-forecast:OWMAccount:local:current#temperature"}
+Number:Dimensionless 	Weather_OWM_Humidity		  	"Humidity [%d %unit%]"		<humidity>      {channel="openweathermap:weather-and-forecast:OWMAccount:local:current#humidity"}
+Number:Speed    		Weather_OWM_Wind_Speed			  "Windspeed [%.1f km/h]"			              {channel="openweathermap:weather-and-forecast:OWMAccount:local:current#wind-speed"}
+String		Weather_OWM_Station_Name		            "Station Name [%s]"				                {channel="openweathermap:weather-and-forecast:OWMAccount:local:station#name"}
+DateTime	Weather_OWM_ObservationTime		          "Observation time [%1$tY-%1$tm-%1$td]"		{channel="openweathermap:weather-and-forecast:OWMAccount:local:current#time-stamp"}
+String		Weather_OWM_Condition			              "Condition [%s]"				                  {channel="openweathermap:weather-and-forecast:OWMAccount:local:current#condition"}
+String		Weather_OWM_ConditionId			            "ConditionId [%s]"				                {channel="openweathermap:weather-and-forecast:OWMAccount:local:current#condition-id"}
+Image		  Weather_OWM_ConditionIcon			          "Icon [%s]"				                        {channel="openweathermap:weather-and-forecast:OWMAccount:local:current#icon"}
+String		Weather_OWM_ConditionIconId			        "IconId [%s]"			                        {channel="openweathermap:weather-and-forecast:OWMAccount:local:current#icon-id"}
+String    Weather_OWM_ObservationTime             "Rain [%s]"                               {channel="openweathermap:weather-and-forecast:OWMAccount:local:current#rain"}

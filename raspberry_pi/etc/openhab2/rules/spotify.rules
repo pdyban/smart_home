@@ -1,0 +1,13 @@
+rule "Switch Denon power off"
+when
+  Item spotifyTrackPlayer changed to PLAY
+then
+  if(spotifyDevices.state == "73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167") DenonPower.sendCommand(ON)
+end
+
+rule "Switch Denon power off"
+when
+  Item spotifyTrackPlayer changed to PAUSE
+then
+  if(spotifyDevices.state == "73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167") DenonPower.sendCommand(OFF)
+end

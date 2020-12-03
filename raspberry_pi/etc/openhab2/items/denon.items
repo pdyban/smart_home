@@ -1,0 +1,8 @@
+/*https://www.openhab.org/addons/bindings/denon1/*/
+Switch DenonPower "Power" (gSoundAdvanced)	{denon="avr2000#PW"}
+String DenonCurrentTrack	"Current track [%s]"	{denon="avr2000#TRACK"}
+String DenonCurrentArtist	"Current artist [%s]"	{denon="avr2000#ARTIST"}
+String DenonCurrentAlbum	"Current album [%s]"	{denon="avr2000#ALBUM"}
+Dimmer DenonVolume		"Volume [%.1f]"		{denon="avr2000#MV"}
+Switch DenonMute		"Mute"			{denon="avr2000#MU"}
+Group gSoundAdvanced "Advanced" <receiver>

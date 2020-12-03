@@ -1,0 +1,7 @@
+Number OutsideHumidity    "Outside humidity [%d %%]"  <humidity> (Humidity, gOutside) {weather="locationId=home, type=atmosphere, property=humidity"}
+Dimmer ESPOffice_HumidityOffice "Office humidity [%d %%]" <humidity> (Humidity, Office, gInside) {channel="mqtt:topic:ESPOffice:Humidity_Office"}
+Dimmer ESPBathroom_HumidityBathroom "Bathroom humidity [%d %%]" <humidity> (Humidity, Bathroom, gInside) {channel="mqtt:topic:ESPBathroom:Humidity_Bathroom"}
+Dimmer ESPStore_HumidityStore "Storage room humidity [%d %%]" <humidity> (Humidity, Store, gInside) {channel="mqtt:topic:ESPStore:Humidity_Store"}
+Dimmer ESPLivingroom_HumidityLivingroom "Living room humidity [%d %%]" <humidity> (Humidity, Livingroom, gInside) {channel="mqtt:topic:ESPLivingroom:Humidity_Livingroom"}
+Dimmer ESPHall_HumidityHall "Hall humidity [%d %%]" <humidity> (Humidity, Hall, gInside) {channel="mqtt:topic:ESPHall:Humidity_Hall"}
+Dimmer ESPBedroom_HumidityBedroom "Bedroom humidity [%d %%]" <humidity> (Humidity, Bedroom, gInside) { channel="mqtt:topic:ESPBedroom:Humidity_Bedroom" }
