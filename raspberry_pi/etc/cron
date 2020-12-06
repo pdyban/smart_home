@@ -1,1 +1,1 @@
-* * * * * /bin/systemctl restart raspotify
+0 4 * * * /bin/systemctl restart raspotify
