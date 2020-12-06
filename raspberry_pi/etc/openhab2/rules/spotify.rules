@@ -1,13 +1,39 @@
+import org.eclipse.smarthome.core.types.RefreshType
+
+
+var raspotifyID = "73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167"
+
 rule "Switch Denon power off"
 when
   Item spotifyTrackPlayer changed to PLAY
 then
-  if(spotifyDevices.state == "73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167") DenonPower.sendCommand(ON)
+  if(spotifyDevices.state == raspotifyID) {
+    logInfo("denon-play", "Current Denon state: {}, Current Denon AUXB state: {}", DenonInput.state, DenonInputAux1.state)
+    DenonPower.sendCommand(ON)
+    DenonInputAux1.sendCommand(ON)
+  }
 end
 
 rule "Switch Denon power off"
 when
   Item spotifyTrackPlayer changed to PAUSE
 then
-  if(spotifyDevices.state == "73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167") DenonPower.sendCommand(OFF)
+  if(spotifyDevices.state == raspotifyID) {
+    DenonPower.sendCommand(OFF)
+  }
+end
+
+rule "Enable AUXB channel in Denon while Raspotify is running"
+when
+  Time cron "0/5 * * ? * * *"
+then
+  if(DenonPower.state == ON && spotifyDevices.state == raspotifyID && DenonInputAux1.state == OFF) DenonInputAux1.sendCommand(ON)
+end
+
+rule "Trigger update of Spotify devices"
+when
+  Time cron "0 0/1 * 1/1 * ? *"
+then
+  logInfo("spotify-devices", "{}", spotifyDevices.state)
+  /*spotifyDevices.sendCommand(RefreshType.REFRESH)*/
 end
