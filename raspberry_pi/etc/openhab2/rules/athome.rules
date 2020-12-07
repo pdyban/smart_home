@@ -1,0 +1,37 @@
+rule "Init"
+when
+	System started
+then
+  AtHome.sendCommand(ON)
+end
+
+rule "Turn off heating when leaving the home"
+when
+  Item AtHome changed to OFF
+then
+  logInfo("presence", "Turning off bathroom floor heating because leaving home")
+  HeatingBathroom_State.sendCommand(OFF)
+
+  logInfo("presence", "Turning on vacation mode on thermostats because not at home")
+  HeatingOffice_1_ActiveProfile.sendCommand(2)
+  HeatingBedroom_1_ActiveProfile.sendCommand(2)
+end
+
+rule "Turn on heating when entering home"
+when
+  Item AtHome changed from OFF to ON
+then
+  logInfo("presence", "Turning off vacation mode on thermostats because not at home")
+  HeatingOffice_1_ActiveProfile.sendCommand(1)
+  HeatingBedroom_1_ActiveProfile.sendCommand(1)
+end
+
+rule "Turn off bathroom floor heating when not at home"
+when
+  Item HeatingBathroom_State changed to ON
+then
+  if(AtHome.state == OFF) {
+    logInfo("presence", "Turning off bathroom floor heating because not at home")
+    HeatingBathroom_State.sendCommand(OFF)
+  }
+end

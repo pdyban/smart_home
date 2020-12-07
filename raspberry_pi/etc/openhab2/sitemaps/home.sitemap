@@ -1,5 +1,6 @@
 sitemap home label="Smart Home"
 {
+  Switch item=AtHome icon="switch"
   Frame label="Today"
   {
     Text item=Date
@@ -24,6 +25,7 @@ sitemap home label="Smart Home"
       Text item=ESPBedroom_TemperatureBedroom icon="temperature" label="Room temperature [%d °C]"
       Text item=ESPBedroom_HumidityBedroom icon="humidity" label="Relative humidity [%d %%]"
       Setpoint item=ThermostatBedroom_1_SetPointTemperature icon="heating" label="Target temperature [%d °C]" minValue=8 maxValue=25 step=1
+      Switch item=HeatingBedroom_1_BoostMode icon="temperature_hot" label="Boost heating"
       Text item=HeatingBedroom_1_WindowState icon="window" label="Window opened?"
   }
   Frame label="Office"
@@ -31,6 +33,7 @@ sitemap home label="Smart Home"
       Text item=ESPOffice_TemperatureOffice icon="temperature" label="Room temperature [%d °C]"
       Text item=ESPOffice_HumidityOffice icon="humidity" label="Relative humidity [%d %%]"
       Setpoint item=ThermostatOffice_1_SetPointTemperature icon="heating" label="Target temperature [%d °C]" minValue=8 maxValue=25 step=1
+      Switch item=HeatingOffice_1_BoostMode icon="temperature_hot" label="Boost heating"
       Text item=ThermostatOffice_1_WindowState icon="window" label="Window opened?"
   }
   Frame label="Living room"
@@ -52,14 +55,14 @@ sitemap home label="Smart Home"
   }
   Frame label="Neato"
   {
-      Selection item=Neato_SendCommand icon="switch" label="Launch Neato"
+      Selection item=Neato_SendCommand icon="shield" label="Launch Neato"
   }
   Frame label="Sound"
   {
-      Selection item=spotifyPlaylists     label="Playlist" icon="music"
-      Default   item=spotifyTrackPlayer   label="Player"
-      Slider item=DenonVolume
-      Group item=gSoundAdvanced
+      Selection item=spotifyPlaylists     label="Playlist" icon="text"
+      Default   item=spotifyTrackPlayer   label="Player" icon="receiver"
+      Slider item=DenonVolume icon="soundvolume"
+      Group item=gSoundAdvanced icon="settings"
       {
         Selection item=spotifyDevices       label="Active device [%s]"
         Switch item=DenonPower

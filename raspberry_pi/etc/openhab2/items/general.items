@@ -2,3 +2,4 @@ DateTime Date  		"Date: [%1$tA, %1$td/%1$tm/%1$tY]"	<calendar>	{ channel="ntp:nt
 DateTime Time	  	"Time: [%1$tH:%1$tM]"			<time>		{ channel="ntp:ntp:local:dateTime" }
 
 /*Switch NeatoCommand label="Neato command" mappings=[ON="Launch", OFF="To Dock"]*/
+Switch AtHome "At home"

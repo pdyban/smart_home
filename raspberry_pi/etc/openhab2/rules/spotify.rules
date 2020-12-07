@@ -1,7 +1,6 @@
 import org.eclipse.smarthome.core.types.RefreshType
 
-
-var raspotifyID = "73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167"
+val raspotifyID = "73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167"
 
 rule "Switch Denon power off"
 when
@@ -36,4 +35,5 @@ when
 then
   logInfo("spotify-devices", "{}", spotifyDevices.state)
   /*spotifyDevices.sendCommand(RefreshType.REFRESH)*/
+  spotifyPlaylists.sendCommand(RefreshType.REFRESH)
 end
