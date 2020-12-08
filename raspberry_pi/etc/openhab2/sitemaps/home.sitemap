@@ -59,8 +59,9 @@ sitemap home label="Smart Home"
   }
   Frame label="Sound"
   {
+      Text item=playingOn visibility=[spotifyPlayingSomewhereElse==ON] icon="error"
       Selection item=spotifyPlaylists     label="Playlist" icon="text"
-      Default   item=spotifyTrackPlayer   label="Player" icon="receiver"
+      Default item=dummyPlayer label="Player" icon="receiver"
       Slider item=DenonVolume icon="soundvolume"
       Group item=gSoundAdvanced icon="settings"
       {
@@ -68,6 +69,7 @@ sitemap home label="Smart Home"
         Switch item=DenonPower
         Switch item=DenonMute
         Switch item=DenonInputAux1 label="Toggle Raspotify input on Denon"
+        Default   item=spotifyTrackPlayer   label="Player" icon="receiver"
       }
   }
 }
