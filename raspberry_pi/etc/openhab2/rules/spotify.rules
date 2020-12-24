@@ -4,7 +4,7 @@ val raspotifyID = "73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167"
 
 rule "Sync Denon power status to raspotify play status"
 when
-  Time cron "0/2 * * * * ? *"
+  Time cron "0/1 * * * * ? *"
 then
   //logInfo("spotify-player", "Spotify player state: {}, Denon state: {}", spotifyTrackPlayer.state, DenonPower.state)
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID && DenonPower.state == OFF) DenonPower.sendCommand(ON)
@@ -74,7 +74,7 @@ rule "Produce warning when Spotify is playing on a different device"
 when
   Item spotifyTrackPlayer changed to PLAY
 then
-  if(spotifyDevices.state == raspotifyID) {
+  if(spotifyDevices.state != raspotifyID) {
     spotifyPlayingSomewhereElse.sendCommand(ON)
   }
   else {
