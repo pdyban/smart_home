@@ -1,14 +1,11 @@
-//import org.eclipse.smarthome.core.types.RefreshType
-
 val raspotifyID = "73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167"
 
 rule "Sync Denon power status to raspotify play status"
 when
   Time cron "0/1 * * * * ? *"
 then
-  //logInfo("spotify-player", "Spotify player state: {}, Denon state: {}", spotifyTrackPlayer.state, DenonPower.state)
-  if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID && DenonPower.state == OFF) DenonPower.sendCommand(ON)
-  if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID) spotifyPlayingSomewhereElse.sendCommand(OFF)
+  if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID && DenonPower.state == OFF) { DenonPower.sendCommand(ON); DenonInputAux1.sendCommand(ON); }
+  if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID) { spotifyPlayingSomewhereElse.sendCommand(OFF); DenonInputAux1.sendCommand(ON); }
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state != raspotifyID && DenonPower.state == ON) DenonPower.sendCommand(OFF)
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state != raspotifyID) spotifyPlayingSomewhereElse.sendCommand(ON)
   if(spotifyTrackPlayer.state != PLAY) spotifyPlayingSomewhereElse.sendCommand(OFF)
@@ -23,53 +20,6 @@ then
   }
 end
 
-rule "Dummy player play handling"
-when
-  Item dummyPlayer changed from PAUSE to PLAY
-then
-  logInfo("spotify-player", "Dummy player starts playing")
-  spotifyDevices.sendCommand(raspotifyID)
-  DenonPower.sendCommand(ON)
-  DenonInputAux1.sendCommand(ON)
-end
-
-rule "Dummy player pause handling"
-when
-  Item dummyPlayer changed to PAUSE
-then
-  logInfo("spotify-player", "Dummy player stops playing")
-  DenonPower.sendCommand(OFF)
-  if(spotifyTrackPlayer.state == PLAY) {
-    spotifyTrackPlayer.sendCommand(PAUSE)
-  }
-end
-
-rule "Dummy player next handling"
-when
-  Item dummyPlayer received command NEXT
-then
-  logInfo("spotify-player", "Dummy player next song")
-  spotifyTrackPlayer.sendCommand(NEXT)
-  dummyPlayer.postUpdate(PLAY)
-end
-
-rule "Dummy player previous handling"
-when
-  Item dummyPlayer received command PREVIOUS
-then
-  logInfo("spotify-player", "Dummy player previous song")
-  spotifyTrackPlayer.sendCommand(PREVIOUS)
-  dummyPlayer.postUpdate(PLAY)
-end
-
-rule "Init dummmy player to paused"
-when
-  System started
-then
-  logInfo("spotify-player", "Init dummy player to PAUSE")
-  dummyPlayer.postUpdate(PAUSE)
-end
-
 rule "Produce warning when Spotify is playing on a different device"
 when
   Item spotifyTrackPlayer changed to PLAY
@@ -81,30 +31,3 @@ then
     spotifyPlayingSomewhereElse.sendCommand(OFF)
   }
 end
-
-/*rule "Switch Denon power on"
-when
-  Item spotifyTrackPlayer changed to PLAY
-then
-  if(spotifyDevices.state == raspotifyID) {
-    logInfo("denon-play", "Current Denon state: {}, Current Denon AUXB state: {}", DenonInput.state, DenonInputAux1.state)
-    DenonPower.sendCommand(ON)
-    DenonInputAux1.sendCommand(ON)
-  }
-end*/
-
-/*rule "Enable AUXB channel in Denon while Raspotify is running"
-when
-  Time cron "0/5 * * ? * * *"
-then
-  if(DenonPower.state == ON && spotifyDevices.state == raspotifyID && DenonInputAux1.state == OFF) DenonInputAux1.sendCommand(ON)
-end*/
-
-/*rule "Trigger update of Spotify devices"
-when
-  Time cron "0 0/1 * 1/1 * ? *"
-then
-  logInfo("spotify-devices", "{}", spotifyDevices.state)
-  //spotifyDevices.sendCommand(RefreshType.REFRESH)
-  //spotifyPlaylists.sendCommand(RefreshType.REFRESH)
-end*/
