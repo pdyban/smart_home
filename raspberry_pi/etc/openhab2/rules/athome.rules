@@ -35,3 +35,21 @@ then
     HeatingBathroom_State.sendCommand(OFF)
   }
 end
+
+rule "Switch home presence based on mobile phones\' presence in network"
+when
+	Item PresenceAnastasiia_Online changed or Item Pavlo_AtHome changed
+then
+	if((PresenceAnastasiia_Online.state == ON) || (Pavlo_AtHome.state == ON)) {
+		logInfo("presence", "At least one phone is at home.");
+		AtHome.sendCommand(ON);
+	}
+	else {
+		val hours = Integer::parseInt(String::format("%1$tk", new java.util.Date));
+		// activate rule only during "daytime"
+		if((hours < 22) && (hours > 6)) {
+			logInfo("presence", "Both phones have left home.");
+			AtHome.sendCommand(OFF);
+		}
+	}
+end
