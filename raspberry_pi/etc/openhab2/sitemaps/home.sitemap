@@ -41,7 +41,6 @@ sitemap home label="Smart Home"
       Text item=ESPLivingroom_TemperatureLivingroom icon="temperature" label="Room temperature [%d °C]"
       Text item=ESPLivingroom_HumidityLivingroom icon="humidity" label="Relative humidity [%d %%]"
       Text item=ESPLivingroom_PM10Livingroom icon="qualityofservice" label="Air quality (PM10) [%d ppm]" valuecolor=[>=50="red", <30="green", <50="orange"]
-      Text item=ESPLivingroom_PM25Livingroom icon="qualityofservice" label="Air quality (PM2.5) [%d ppm]" valuecolor=[>=40="red", <20="green", <30="orange"]
   }
   Frame label="Hall"
   {
@@ -60,14 +59,14 @@ sitemap home label="Smart Home"
   Frame label="Sound"
   {
       Text item=playingOn visibility=[spotifyPlayingSomewhereElse==ON] icon="error"
-      Group item=gSoundAdvanced icon="settings"
+      Group item=gSoundAdvanced label="Sound Settings" icon="settings"
       {
         Switch item=DenonPower
         Slider item=DenonVolume icon="soundvolume"
         Switch item=DenonMute
         Selection item=spotifyDevices       label="Active device [%s]"
         Switch item=DenonInputAux1 label="Toggle Raspotify input on Denon"
-        Default   item=spotifyTrackPlayer   label="Player" icon="receiver"
+        Default   item=spotifyTrackPlayer   label="Spotify Bridge" icon="receiver"
       }
   }
 }
