@@ -7,7 +7,7 @@ then
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID && DenonPower.state == OFF) { DenonPower.sendCommand(ON); DenonInputAux1.sendCommand(ON); }
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID) { spotifyPlayingSomewhereElse.sendCommand(OFF); DenonInputAux1.sendCommand(ON); }
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state != raspotifyID && DenonPower.state == ON) DenonPower.sendCommand(OFF)
-  if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state != raspotifyID) spotifyPlayingSomewhereElse.sendCommand(ON)
+  if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state != raspotifyID && spotifyPlayingSomewhereElse.state != ON) spotifyPlayingSomewhereElse.sendCommand(ON)
   if(spotifyTrackPlayer.state != PLAY) spotifyPlayingSomewhereElse.sendCommand(OFF)
 end
 
@@ -24,7 +24,7 @@ rule "Produce warning when Spotify is playing on a different device"
 when
   Item spotifyTrackPlayer changed to PLAY
 then
-  if(spotifyDevices.state != raspotifyID) {
+  if(spotifyDevices.state != raspotifyID && spotifyPlayingSomewhereElse.state == OFF) {
     spotifyPlayingSomewhereElse.sendCommand(ON)
   }
   else {
