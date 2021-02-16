@@ -1,0 +1,13 @@
+sitemap homeHAB label="HomeHAB"
+{
+  Frame label="DateTimeWidget"
+  {
+    Text item=Date label="DateElement"
+    Text item=Time label="TimeElement"
+  }
+  Frame label="RoomWidget:LivingRoom"
+  {
+      Text item=ESPLivingroom_TemperatureLivingroom label="TemperatureElement"
+      Text item=ESPLivingroom_HumidityLivingroom    label="HumidityElement"
+  }
+}
