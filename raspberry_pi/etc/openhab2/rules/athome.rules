@@ -21,7 +21,7 @@ rule "Turn on heating when entering home"
 when
   Item AtHome changed from OFF to ON
 then
-  logInfo("presence", "Turning off vacation mode on thermostats because not at home")
+  logInfo("presence", "Turning off vacation mode on thermostats because at home")
   HeatingOffice_1_ActiveProfile.sendCommand(1)
   HeatingBedroom_1_ActiveProfile.sendCommand(1)
 end

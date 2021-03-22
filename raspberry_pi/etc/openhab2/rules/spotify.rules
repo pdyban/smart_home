@@ -4,11 +4,25 @@ rule "Sync Denon power status to raspotify play status"
 when
   Time cron "0/1 * * * * ? *"
 then
-  if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID && DenonPower.state == OFF) { DenonPower.sendCommand(ON); DenonInputAux1.sendCommand(ON); }
-  if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID) { spotifyPlayingSomewhereElse.sendCommand(OFF); DenonInputAux1.sendCommand(ON); }
+  if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID && DenonPower.state == OFF) {
+    DenonPower.sendCommand(ON)
+    DenonInput.sendCommand("AUX1")
+    if(DenonVolume.state > 20) {
+      logInfo("spotify", "Reducing volume to 20.")
+      DenonVolume.sendCommand(20)
+    }
+  }
+  if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID) {
+    if(spotifyPlayingSomewhereElse.state != OFF) { spotifyPlayingSomewhereElse.sendCommand(OFF) }
+    if(DenonInput.state != "AUX1") { DenonInput.sendCommand("AUX1") }
+    if(DenonVolume.state > 20) {
+      logInfo("spotify", "Reducing volume to 20.")
+      DenonVolume.sendCommand(20)
+    }
+  }
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state != raspotifyID && DenonPower.state == ON) DenonPower.sendCommand(OFF)
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state != raspotifyID && spotifyPlayingSomewhereElse.state != ON) spotifyPlayingSomewhereElse.sendCommand(ON)
-  if(spotifyTrackPlayer.state != PLAY) spotifyPlayingSomewhereElse.sendCommand(OFF)
+  if(spotifyTrackPlayer.state != PLAY && spotifyPlayingSomewhereElse.state != OFF) spotifyPlayingSomewhereElse.sendCommand(OFF)
 end
 
 rule "Switch Denon power off on playback pause"
@@ -28,6 +42,8 @@ then
     spotifyPlayingSomewhereElse.sendCommand(ON)
   }
   else {
-    spotifyPlayingSomewhereElse.sendCommand(OFF)
+    if(spotifyPlayingSomewhereElse.state != OFF) {
+      spotifyPlayingSomewhereElse.sendCommand(OFF)
+    }
   }
 end
