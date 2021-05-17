@@ -1,23 +1,26 @@
 val raspotifyID = "73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167"
 
+
 rule "Sync Denon power status to raspotify play status"
 when
   Time cron "0/1 * * * * ? *"
 then
+  val maxVolume = RaspotifyMaxVolume.state
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID && DenonPower.state == OFF) {
     DenonPower.sendCommand(ON)
     DenonInput.sendCommand("AUX1")
-    if(DenonVolume.state > 20) {
-      logInfo("spotify", "Reducing volume to 20.")
-      DenonVolume.sendCommand(20)
+    logInfo("spotify", maxVolume)
+    if(DenonVolume.state > maxVolume) {
+      logInfo("spotify", "Reducing volume to maximum.")
+      DenonVolume.sendCommand(maxVolume)
     }
   }
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID) {
     if(spotifyPlayingSomewhereElse.state != OFF) { spotifyPlayingSomewhereElse.sendCommand(OFF) }
     if(DenonInput.state != "AUX1") { DenonInput.sendCommand("AUX1") }
-    if(DenonVolume.state > 20) {
-      logInfo("spotify", "Reducing volume to 20.")
-      DenonVolume.sendCommand(20)
+    if(DenonVolume.state > maxVolume) {
+      logInfo("spotify", "Reducing volume to maximum.")
+      DenonVolume.sendCommand(maxVolume)
     }
   }
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state != raspotifyID && DenonPower.state == ON) DenonPower.sendCommand(OFF)
