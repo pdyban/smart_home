@@ -55,6 +55,7 @@ sitemap home label="Smart Home"
   Frame label="Neato"
   {
       Switch item=Neato_SendCommand icon="shield" label="" mappings=[clean="Clean",dock="Go to dock",pause="Pause",resume="Resume"]
+      Text item=_CurrentState icon="error" visibility=[_CurrentState=="Error"]
   }
   Frame label="Sound"
   {
