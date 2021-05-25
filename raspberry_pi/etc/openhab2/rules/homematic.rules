@@ -1,4 +1,4 @@
-import org.eclipse.smarthome.core.types.RefreshType
+import org.openhab.core.types.RefreshType
 
 rule "Trigger update of values"
 when
