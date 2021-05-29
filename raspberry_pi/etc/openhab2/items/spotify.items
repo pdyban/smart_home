@@ -23,4 +23,4 @@ Player dummyPlayer "Dummy player"
 String dummyPlaylists "Playlists [%s]"
 String playingOn "Music playing on a different device"
 Switch spotifyPlayingSomewhereElse
-Number RaspotifyMaxVolume "Maximum Volume" 
+Number RaspotifyMaxVolume "Maximum Volume"
