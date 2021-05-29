@@ -1,6 +1,0 @@
-/*rule "Neato start cleaning"
-when
-  Item NeatoCommand received command ON
-then
-  Neato_SendCommand.sendCommand(CLEAN)
-end*/

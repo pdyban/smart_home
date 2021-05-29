@@ -64,11 +64,15 @@ sitemap home label="Smart Home"
       {
         Switch item=DenonPower
         Switch item=DenonMute
-        Slider item=DenonVolume icon="soundvolume"
+        Slider item=DenonVolume icon="soundvolume" label="Volume [%s]" minValue=5 maxValue=40 step=1
         Switch item=DenonInput label="Input source" mappings=[AUX1="Analog 1"]
         Selection item=spotifyDevices       label="Active device [%s]"
         Default item=spotifyTrackPlayer   label="Spotify Bridge" icon="receiver"
         Slider item=RaspotifyMaxVolume icon="soundvolume" label="Maximum volume [%s]" minValue=5 maxValue=40 step=1
       }
+  }
+  Frame label="Baby Phone"
+  {
+      Image item=FoscamCamerawithAPI_ImageURL refresh=500
   }
 }

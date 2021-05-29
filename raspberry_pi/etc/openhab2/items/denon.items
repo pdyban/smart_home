@@ -1,4 +1,4 @@
-Switch DenonPower   "Power" (gSoundAdvanced)
+/*Switch DenonPower   "Power" (gSoundAdvanced)
 Dimmer DenonVolume  "Volume [%d]"
 Switch DenonMute    "Mute"
-Group gSoundAdvanced "Advanced" <receiver>
+Group gSoundAdvanced "Advanced" <receiver>*/

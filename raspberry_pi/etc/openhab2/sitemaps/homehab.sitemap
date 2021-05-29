@@ -1,4 +1,4 @@
-sitemap homeHAB label="HomeHAB"
+sitemap homehab label="HomeHAB"
 {
   Frame label="DateTimeWidget"
   {

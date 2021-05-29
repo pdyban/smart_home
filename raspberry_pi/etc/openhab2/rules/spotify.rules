@@ -9,18 +9,21 @@ then
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID && DenonPower.state == OFF) {
     DenonPower.sendCommand(ON)
     DenonInput.sendCommand("AUX1")
-    logInfo("spotify", maxVolume)
+    logInfo("spotify", DenonVolume.state.toString)
+    logInfo("spotify", maxVolume.toString)
     if(DenonVolume.state > maxVolume) {
       logInfo("spotify", "Reducing volume to maximum.")
-      DenonVolume.sendCommand(maxVolume)
+      DenonVolume.sendCommand(maxVolume.toString)
     }
   }
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state == raspotifyID) {
     if(spotifyPlayingSomewhereElse.state != OFF) { spotifyPlayingSomewhereElse.sendCommand(OFF) }
     if(DenonInput.state != "AUX1") { DenonInput.sendCommand("AUX1") }
+    logInfo("spotify", DenonVolume.state.toString)
+    logInfo("spotify", maxVolume.toString)
     if(DenonVolume.state > maxVolume) {
       logInfo("spotify", "Reducing volume to maximum.")
-      DenonVolume.sendCommand(maxVolume)
+      DenonVolume.sendCommand(maxVolume.toString)
     }
   }
   if(spotifyTrackPlayer.state == PLAY && spotifyDevices.state != raspotifyID && DenonPower.state == ON) DenonPower.sendCommand(OFF)
