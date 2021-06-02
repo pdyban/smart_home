@@ -73,6 +73,7 @@ sitemap home label="Smart Home"
   }
   Frame label="Baby Phone"
   {
-      Image item=FoscamCamerawithAPI_ImageURL refresh=500
+      Image item=FoscamCamerawithAPI_ImageURL refresh=500 visibility=[FoscamCameraPing_Online==ON]
+      Text item=FoscamCameraOfflineText label="Camera is offline" visibility=[FoscamCameraPing_Online==OFF] icon="error"
   }
 }
