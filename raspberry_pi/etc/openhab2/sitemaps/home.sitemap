@@ -18,23 +18,23 @@ sitemap home label="Smart Home"
   {
       Text item=ESPBathroom_TemperatureBathroom icon="temperature" label="Room temperature [%d °C]"
       Text item=ESPBathroom_HumidityBathroom icon="humidity" label="Relative humidity [%d %%]"
-      Switch item=HeatingBathroom_State icon="heating"
+      /*Switch item=HeatingBathroom_State icon="heating"*/
   }
   Frame label="Bedroom"
   {
       Text item=ESPBedroom_TemperatureBedroom icon="temperature" label="Room temperature [%d °C]"
       Text item=ESPBedroom_HumidityBedroom icon="humidity" label="Relative humidity [%d %%]"
-      Setpoint item=ThermostatBedroom_1_SetPointTemperature icon="heating" label="Target temperature [%d °C]" minValue=8 maxValue=25 step=1
+      /*Setpoint item=ThermostatBedroom_1_SetPointTemperature icon="heating" label="Target temperature [%d °C]" minValue=8 maxValue=25 step=1
       Switch item=HeatingBedroom_1_BoostMode icon="temperature_hot" label="Boost heating"
-      Text item=HeatingBedroom_1_WindowState icon="window" label="" visibility=[HeatingBedroom_1_WindowState==OPEN]
+      Text item=HeatingBedroom_1_WindowState icon="window" label="" visibility=[HeatingBedroom_1_WindowState==OPEN]*/
   }
   Frame label="Office"
   {
       Text item=ESPOffice_TemperatureOffice icon="temperature" label="Room temperature [%d °C]"
       Text item=ESPOffice_HumidityOffice icon="humidity" label="Relative humidity [%d %%]"
-      Setpoint item=ThermostatOffice_1_SetPointTemperature icon="heating" label="Target temperature [%d °C]" minValue=8 maxValue=25 step=1
+      /*Setpoint item=ThermostatOffice_1_SetPointTemperature icon="heating" label="Target temperature [%d °C]" minValue=8 maxValue=25 step=1
       Switch item=HeatingOffice_1_BoostMode icon="temperature_hot" label="Boost heating"
-      Text item=ThermostatOffice_1_WindowState icon="window" label="" visibility=[ThermostatOffice_1_WindowState==OPEN]
+      Text item=ThermostatOffice_1_WindowState icon="window" label="" visibility=[ThermostatOffice_1_WindowState==OPEN]*/
   }
   Frame label="Living room"
   {
