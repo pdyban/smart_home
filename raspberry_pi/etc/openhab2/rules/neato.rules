@@ -1,0 +1,6 @@
+rule "Reset Neato status"
+when
+  Item _IsDocked changed to ON
+then
+  Neato_SendCommand.postUpdate("dock")
+end
