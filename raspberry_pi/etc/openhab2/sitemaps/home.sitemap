@@ -8,9 +8,9 @@ sitemap home label="Smart Home"
   }
   Frame label="Outside"
   {
-    Text item=Weather_OWM_Temperature icon="temperature" label="Outside Temperature"
-    Text item=Weather_OWM_Humidity icon="humidity" label="Outside Humidity"
-    Text item=Weather_OWM_Condition icon="sun_clouds" label="Weather Condition"
+    Text item=Weather_OWM_Current_Temperature icon="temperature" label="Outside Temperature"
+    Text item=Weather_OWM_Current_Humidity icon="humidity" label="Outside Humidity"
+    Text item=Weather_OWM_Current_Condition icon="sun_clouds" label="Weather Condition"
     Text item=Weather_OWM_Wind_Speed icon="wind"  label="Wind Speed"
     Text item=LocalAirQuality_AirQualityIndex icon="qualityofservice" label="Air Quality Index" valuecolor=[>=50="red", <30="green", <50="orange"]
   }
@@ -28,13 +28,21 @@ sitemap home label="Smart Home"
       Switch item=HeatingBedroom_1_BoostMode icon="temperature_hot" label="Boost heating"
       Text item=HeatingBedroom_1_WindowState icon="window" label="" visibility=[HeatingBedroom_1_WindowState==OPEN]
   }
-  Frame label="Office"
+  Frame label="Children's Room"
   {
       Text item=ESPOffice_TemperatureOffice icon="temperature" label="Room temperature [%d °C]"
       Text item=ESPOffice_HumidityOffice icon="humidity" label="Relative humidity [%d %%]"
       Setpoint item=ThermostatOffice_1_SetPointTemperature icon="heating" label="Target temperature [%d °C]" minValue=8 maxValue=25 step=1
       Switch item=HeatingOffice_1_BoostMode icon="temperature_hot" label="Boost heating"
       Text item=ThermostatOffice_1_WindowState icon="window" label="" visibility=[ThermostatOffice_1_WindowState==OPEN]
+
+      Switch item=CameraPlug_Power
+
+      Image item=FoscamCamerawithAPI_ImageURL refresh=500 visibility=[FoscamCameraPing_Online==ON]
+      /*
+      Video url="http://192.168.178.25:12345/ipcamera.m3u8" encoding="hls" visibility=[FoscamCameraPing_Online==ON]
+      */
+      Text item=FoscamCameraOfflineText label="Camera is offline" visibility=[FoscamCameraPing_Online==OFF] icon="error"
   }
   Frame label="Living room"
   {
@@ -72,16 +80,5 @@ sitemap home label="Smart Home"
         Default item=spotifyTrackPlayer   label="Spotify Bridge" icon="receiver"
       }
   }
-  /*
-  Frame label="TEST"
-  {
-    Video item=FoscamCamerawithAPI_MJPEGURL encoding="mjpeg" url="http://192.168.178.25:12345/ipcamera.mjpeg"
-  }
-  */
-  Frame label="Baby Phone"
-  {
-      Switch item=CameraPlug_Power
-      Image item=FoscamCamerawithAPI_ImageURL refresh=500 visibility=[FoscamCameraPing_Online==ON]
-      Text item=FoscamCameraOfflineText label="Camera is offline" visibility=[FoscamCameraPing_Online==OFF] icon="error"
-  }
+
 }
