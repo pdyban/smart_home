@@ -1,0 +1,6 @@
+rule "Pre-init HLS stream"
+when
+  Item CameraPlug_Power changed to ON
+then
+  sendHttpGetRequest("http://192.168.178.25:12345/ipcamera.m3u8")
+end
