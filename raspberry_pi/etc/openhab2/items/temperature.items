@@ -7,11 +7,11 @@ Number   Wind_Speed           "Windspeed [%.2f km/h]"    {weather="locationId=ho
 Number   Temp_Min         "Temperature min [%.2f °C]"   {weather="locationId=home, forecast=1, type=temperature, property=min"}
 Number   Temp_Max         "Temperature max [%.2f °C]"   {weather="locationId=home, forecast=1, type=temperature, property=max"}
 */
-Number ESPOffice_TemperatureOffice "Office temperature [%.2f °C]" <temperature> (Temperature, Office, gInside) {channel="mqtt:topic:ESPOffice:Temp_Office"}
-Number ESPBathroom_TemperatureBathroom "Bathroom temperature [%.2f °C]" <temperature> (Temperature, Bathroom, gInside) {channel="mqtt:topic:ESPBathroom:Temp_Bathroom"}
-Number ESPStore_TemperatureStore "Storage room temperature [%.2f °C]" <temperature> (Temperature, Store, gInside) {channel="mqtt:topic:ESPStore:Temp_Store"}
-Number ESPLivingroom_TemperatureLivingroom "Living room temperature [%.2f °C]" <temperature> (Temperature, Livingroom, gInside) {channel="mqtt:topic:ESPLivingroom:Temp_Livingroom"}
-Number ESPHall_TemperatureHall "Hall temperature [%.2f °C]" <temperature> (Temperature, Hall, gInside) {channel="mqtt:topic:ESPHall:Temp_Hall"}
-Number ESPBedroom_TemperatureBedroom "Bedroom temperature [%.2f °C]" <temperature> (Temperature, Bedroom, gInside) { channel="mqtt:topic:ESPBedroom:Temp_Bedroom" }
+Number ESPOffice_TemperatureOffice "Office temperature [%.2f °C]" <temperature> (Temperature, Office, gInside) {channel="mqtt:topic:ESPOffice:Temp_Office", expire="30m,state=0"}
+Number ESPBathroom_TemperatureBathroom "Bathroom temperature [%.2f °C]" <temperature> (Temperature, Bathroom, gInside) {channel="mqtt:topic:ESPBathroom:Temp_Bathroom", expire="30m,state=0"}
+Number ESPStore_TemperatureStore "Storage room temperature [%.2f °C]" <temperature> (Temperature, Store, gInside) {channel="mqtt:topic:ESPStore:Temp_Store", expire="30m,state=0"}
+Number ESPLivingroom_TemperatureLivingroom "Living room temperature [%.2f °C]" <temperature> (Temperature, Livingroom, gInside) {channel="mqtt:topic:ESPLivingroom:Temp_Livingroom", expire="30m,state=0"}
+Number ESPHall_TemperatureHall "Hall temperature [%.2f °C]" <temperature> (Temperature, Hall, gInside) {channel="mqtt:topic:ESPHall:Temp_Hall", expire="30m,state=0"}
+Number ESPBedroom_TemperatureBedroom "Bedroom temperature [%.2f °C]" <temperature> (Temperature, Bedroom, gInside) { channel="mqtt:topic:ESPBedroom:Temp_Bedroom", expire="30m,state=0"}
 
 Group gInside "Inside" <group>
